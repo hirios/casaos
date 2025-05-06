@@ -127,6 +127,6 @@ class EnelScraper:
 if __name__ == "__main__":
     scraper = EnelScraper(headless=False)
     scraper.run(
-        email="lucascorradinirodrigues@yahoo.com.br",
-        password=""
+        email="teste@yahoo.com.br",
+        password="senhaTeste"
     )
