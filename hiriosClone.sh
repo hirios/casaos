@@ -95,7 +95,7 @@ fi
 TAMANHO_DISCO=$(sudo blockdev --getsize64 "/dev/${DISCO}" | awk '{printf "%.2f", $1/1024/1024/1024}')
 ESPACO_LIVRE=$(df -B1G "${PASTA_SAIDA}" | awk 'NR==2 {print $4}')
 
-if (( $(echo "${TAMANHO_DISCO} > ${ESPACO_LIVRE}" | bc -l) ); then
+if (( $(echo "${TAMANHO_DISCO} > ${ESPACO_LIVRE}" | bc -l) )); then
     echo -e "${VERMELHO}Erro: Espaço insuficiente em ${PASTA_SAIDA}${NC}"
     echo -e "${AMARELO}Necessário: ${TAMANHO_DISCO}GB, Disponível: ${ESPACO_LIVRE}GB${NC}"
     exit 1
