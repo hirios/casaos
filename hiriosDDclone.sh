@@ -15,7 +15,7 @@ done
 if [ ${#MISSING[@]} -gt 0 ]; then
     echo "⚙️ Instalando dependências ausentes: ${MISSING[*]}"
     sudo apt update
-    sudo apt install -y "${MISSING[@]}"
+    sudo apt install -y wget parted gzip pigz xz-utils udev e2fsprogs
 else
     echo "✅ Todas as dependências já estão instaladas."
 fi
@@ -37,8 +37,8 @@ if [ $# -ne 2 ]; then
     exit 1
 fi
 
-DISK="${1%/}"  # remove barra final
-OUTPUT_PATH="$2"
+DISK="${1%/}"  # remove barra final se houver
+OUTPUT_PATH="${2%/}"
 
 if [ ! -b "$DISK" ]; then
     echo "❌ Erro: '$DISK' não é um dispositivo de bloco válido."
