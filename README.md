@@ -1,3 +1,10 @@
+### Como usar:
+
+
+Dê permissões: `chmod +x hiriosClone.sh`
+
+Execute como root: `sudo ./hiriosClone.sh mmcblk0 /backup_folder backup_file_name`
+
 https://github.com/Drewsif/pishrink?tab=readme-ov-file
 https://github.com/billw2/rpi-clone
 https://github.com/raspberrypi-ui/piclone
