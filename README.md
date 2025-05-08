@@ -1,9 +1,9 @@
 ### Como usar:
 
 
-Dê permissões: `chmod +x hiriosClone.sh`
+Dê permissões: `chmod +x hiriosPartclone.sh`
 
-Execute como root: `sudo ./hiriosClone.sh mmcblk0 /backup_folder backup_file_name`
+Execute como root: `sudo ./hiriosPartclone.sh mmcblk0 /backup_folder backup_file_name`
 
 https://github.com/Drewsif/pishrink?tab=readme-ov-file
 https://github.com/billw2/rpi-clone
