@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# -------- Verifica se está rodando como root --------
+if [ "$EUID" -ne 0 ]; then
+  echo "❌ Este script precisa ser executado como root. Use: sudo $0"
+  exit 1
+fi
+
 # -------- 1. Verifica dependências --------
 REQUIRED_CMDS=(wget parted gzip pigz xz udevadm e2fsck)
 MISSING=()
@@ -21,8 +27,8 @@ done
 
 if [ ${#MISSING[@]} -gt 0 ]; then
     echo -e "⚙️  Instalando dependências ausentes: ${MISSING[*]}"
-    sudo apt update
-    sudo apt install -y wget parted gzip pigz xz-utils udev e2fsprogs
+    apt update
+    apt install -y wget parted gzip pigz xz-utils udev e2fsprogs
 else
     echo -e "${GREEN}✅ Todas as dependências já estão instaladas.${NC}"
 fi
@@ -32,7 +38,7 @@ if [ ! -f /usr/local/bin/pishrink.sh ]; then
     echo "📥 Baixando pishrink.sh..."
     wget -q https://raw.githubusercontent.com/Drewsif/PiShrink/master/pishrink.sh -O pishrink.sh
     chmod +x pishrink.sh
-    sudo mv pishrink.sh /usr/local/bin/
+    mv pishrink.sh /usr/local/bin/
     echo "✅ pishrink instalado em /usr/local/bin/pishrink.sh"
 else
     echo "✅ pishrink já está instalado."
@@ -68,10 +74,10 @@ fi
 
 # -------- 6. Criação da imagem --------
 echo "📦 Criando imagem de '$DISK' em '$OUTPUT_FILE'..."
-sudo dd if="$DISK" of="$OUTPUT_FILE" bs=4M status=progress conv=fsync
+dd if="$DISK" of="$OUTPUT_FILE" bs=4M status=progress conv=fsync
 
 # -------- 7. Executa pishrink --------
 echo "🔧 Reduzindo imagem com pishrink..."
-sudo pishrink.sh "$OUTPUT_FILE"
+pishrink.sh "$OUTPUT_FILE"
 
 echo "✅ Imagem final criada e reduzida com sucesso: $OUTPUT_FILE"
