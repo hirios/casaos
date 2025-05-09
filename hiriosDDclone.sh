@@ -4,20 +4,27 @@
 REQUIRED_CMDS=(wget parted gzip pigz xz udevadm e2fsck)
 MISSING=()
 
-echo "🔍 Verificando dependências..."
+RED='\e[1;31m'
+GREEN='\e[1;32m'
+NC='\e[0m' # No Color
+
+echo -e "🔍 Verificando dependências..."
 
 for cmd in "${REQUIRED_CMDS[@]}"; do
-    if ! command -v "$cmd" &> /dev/null; then
+    if ! hash "$cmd" 2>/dev/null; then
+        echo -e "$cmd: ${RED}Não instalado${NC}"
         MISSING+=("$cmd")
+    else
+        echo -e "$cmd: ${GREEN}OK${NC}"
     fi
 done
 
 if [ ${#MISSING[@]} -gt 0 ]; then
-    echo "⚙️ Instalando dependências ausentes: ${MISSING[*]}"
+    echo -e "⚙️  Instalando dependências ausentes: ${MISSING[*]}"
     sudo apt update
     sudo apt install -y wget parted gzip pigz xz-utils udev e2fsprogs
 else
-    echo "✅ Todas as dependências já estão instaladas."
+    echo -e "${GREEN}✅ Todas as dependências já estão instaladas.${NC}"
 fi
 
 # -------- 2. Instala pishrink se necessário --------
